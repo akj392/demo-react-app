@@ -1,9 +1,16 @@
+import { Outlet } from "react-router-dom";
+import Box from '@mui/material/Box';
+import { SideNav } from "./components";
+
 function App() {
   return (
-    <div className="App">
-     <header>
-      <h1>MY React App with Auto Deploy <i class="fa fa-american-sign-language-interpreting" aria-hidden="true"></i></h1>
-     </header>
+    <div>
+      <Box sx={{ display: 'flex' }}>
+        <SideNav />
+        <div className="container-fluid">
+          <Outlet />
+        </div>
+      </Box>
     </div>
   );
 }
