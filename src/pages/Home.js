@@ -1,13 +1,18 @@
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 
 const Home = () => {
   return (
-    <div className='d-flex align-items-center justify-content-center vh-100'>
-      <Typography variant="h2"
-        color='text.secondary'>
-        Welcome to Dashboard Page
-      </Typography>
-    </div>
+    <Box sx={
+      {
+        minHeight: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }
+    }>
+    <Typography variant="h2" color='text.secondary'>Dashboard Page</Typography>
+    </Box>
   )
 }
 

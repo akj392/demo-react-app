@@ -14,8 +14,7 @@ const SideNav = () => {
         { to: '/counter', element: <AvTimerIcon/> }
     ];
     return (
-        <div className='vh-100 border'>
-            <List>
+        <List>
                 {navs.map((nav) => (
                     <ListItem key={nav.to} disablePadding>
                         <ListItemButton onClick={() => navigate(nav.to)}>
@@ -35,7 +34,6 @@ const SideNav = () => {
                     </ListItem>
                 ))}
             </List>
-        </div>
     );
 }
 export default SideNav
