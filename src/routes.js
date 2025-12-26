@@ -1,6 +1,6 @@
 
 import { createBrowserRouter } from "react-router-dom"
-import { Home, PageNotFound } from "./pages";
+import { Dashboard, PageNotFound } from "./pages";
 import App from "./App";
 
 
@@ -11,8 +11,8 @@ export default function getRoutes() {
             element: <App/>,
             children: [
                 {
-                    path: '/home',
-                    element: <Home/>
+                    path: '/dashboard',
+                    element: <Dashboard/>
                 },
                 {
                     path: '*',

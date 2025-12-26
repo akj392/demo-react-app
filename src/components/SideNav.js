@@ -1,5 +1,6 @@
 import HomeIcon from '@mui/icons-material/Home';
 import AvTimerIcon from '@mui/icons-material/AvTimer';
+import SpeedIcon from '@mui/icons-material/Speed';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -10,7 +11,7 @@ const SideNav = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const navs = [
-        { to: '/home', element: <HomeIcon /> },
+        { to: '/dashboard', element: <SpeedIcon/>},
         { to: '/counter', element: <AvTimerIcon/> }
     ];
     return (
