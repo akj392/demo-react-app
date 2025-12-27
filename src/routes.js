@@ -1,14 +1,18 @@
 
 import { createBrowserRouter } from "react-router-dom"
-import { Dashboard, PageNotFound } from "./pages";
 import App from "./App";
+import {
+    Dashboard,
+    PageNotFound,
+    Login
+} from "./pages";
 
 
 export default function getRoutes() {
     const routes = createBrowserRouter([
         {
             path: '/',
-            element: <App/>,
+            element: <App />,
             children: [
                 {
                     path: '/dashboard',
@@ -19,6 +23,10 @@ export default function getRoutes() {
                     element: <PageNotFound/>
                 }
             ]
+        },
+        {
+            path: '/login',
+            element: <Login/>
         }
     ])
     return routes;

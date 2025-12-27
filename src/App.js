@@ -1,69 +1,63 @@
-import Box from '@mui/material/Box';
+import { Box, Typography } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
-import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
 import { SideNav, AppHeader } from './components';
 import { Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsClosing, setMobileOpen } from './store/slices/navDrawerSlice';
+import { useEffect } from 'react';
+import { setCredentials, finishInitializing } from './store/slices';
+import { Login } from './pages';
 
-const drawerWidth = 70;
 
 function App() {
-  const mobileOpen = useSelector((store) => store.navDrawer.mobileOpen);
   const dispatch = useDispatch();
+  const { isAuthenticated, isInitializing } = useSelector(store => store.auth);
 
-  const handleDrawerClose = () => {
-    dispatch(setIsClosing(true));
-    dispatch(setMobileOpen(false));
-  };
+  
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user'));
+    console.log(token, user)
+    if (token && user) {
+      dispatch(setCredentials({ user, token }));
+    } else {
+      dispatch(finishInitializing())
+    }
+    // eslint-disable-next-line
+  }, []);
 
-  const handleDrawerTransitionEnd = () => {
-    dispatch(setIsClosing(false));
-  };
-
-  return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppHeader/>
-      <Box component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
-        <Drawer variant="temporary"
-          open={mobileOpen}
-          onTransitionEnd={handleDrawerTransitionEnd}
-          onClose={handleDrawerClose}
-          sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': {
-              width: drawerWidth,
-              top: '56px'
-            },
-          }}
-          slotProps={{ root: { keepMounted: true } }}>
-          <SideNav />
-        </Drawer>
-        <Drawer variant="permanent"
-          sx={
-            {
-              display: { xs: 'none', sm: 'block' },
-              '& .MuiDrawer-paper': {
-                width: drawerWidth,
-                boxSizing: 'border-box',
-                top: '64px',
-                height: 'calc(100% - 64px)'
-              }
-            }
-          } open>
-          <SideNav />
-        </Drawer>
+  if (isInitializing) {
+    return (
+      <Box sx={
+        {
+          minHeight: '100%',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }
+      }>
+        <Typography variant="h2" color='text.secondary'>
+          Loading ....
+        </Typography>
       </Box>
-      <Box component="main"
-        sx={{ flexGrow: 1, p: 3 }}>
-        <Toolbar />
-        <Outlet />
+    )
+  } else if (isAuthenticated) {
+    return (
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <AppHeader />
+        <SideNav />
+        <Box component="main"
+          sx={{ flexGrow: 1, p: 3 }}>
+          <Toolbar />
+          <Outlet />
+        </Box>
       </Box>
-    </Box>
-  );
+    );
+  } else {
+    return <Login />
+  }
 }
 
 export default App;

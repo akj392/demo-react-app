@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { navDrawerSlice } from "./slices";
+import { authSlice, navDrawerSlice } from "./slices";
 
 const store = configureStore({
     reducer: {
-        navDrawer: navDrawerSlice
+        navDrawer: navDrawerSlice,
+        auth: authSlice
     }
 })
 
