@@ -78,9 +78,7 @@ const Dashboard = () => {
                 display: 'flex',
                 gap: 3,
                 flexDirection: { xs: 'column', md: 'row' },
-                // flexDirection: 'row',
-                flexWrap: 'wrap',
-                // alignItems: 'flex-start'
+                flexWrap: 'wrap'
             }
         }>
             <Card sx={{ flex: 1, p: 3, height: 300 }}>
