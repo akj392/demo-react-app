@@ -1,4 +1,3 @@
-import HomeIcon from '@mui/icons-material/Home';
 import AvTimerIcon from '@mui/icons-material/AvTimer';
 import SpeedIcon from '@mui/icons-material/Speed';
 import List from '@mui/material/List';
