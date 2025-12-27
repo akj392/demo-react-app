@@ -13,7 +13,6 @@ function App() {
   const dispatch = useDispatch();
   const { isAuthenticated, isInitializing } = useSelector(store => store.auth);
 
-  
   useEffect(() => {
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user'));
