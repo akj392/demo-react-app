@@ -1,30 +1,39 @@
-import { useState } from "react";
+import { useEffect, useRef } from "react";
 import {
     Avatar,
     Button,
     TextField,
-    FormControlLabel,
-    Checkbox,
-    Link,
-    Grid,
     Box,
     Typography,
     Container,
     Paper
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { login } from '../store/slices';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { signup } from '../store/slices'
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const SignUp = () => {
+    const isSignedUp = useSelector(store => store.auth.isSignedUp);
     const dispatch = useDispatch();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+    const emailRef = useRef('');
+    const passwordRef = useRef('');
+    const confirmPasswordRef = useRef('');
+
+    useEffect(() => {
+        if(isSignedUp) {
+            navigate('/login')
+        }
+    }, [isSignedUp, navigate]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (email && password) {
-            dispatch(login({ email, password }))
+        const email = emailRef.current.value;
+        const password = passwordRef.current.value;
+        const isPasswordMatching = password === confirmPasswordRef.current.value;
+        if (email && isPasswordMatching) {
+            dispatch(signup({ email, password }))
         }
     };
 
@@ -43,7 +52,7 @@ const Login = () => {
                     </Avatar>
 
                     <Typography component="h1" variant="h5">
-                        Sign in
+                        Sign Up
                     </Typography>
 
                     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
@@ -51,10 +60,9 @@ const Login = () => {
                             margin="normal"
                             required
                             fullWidth
+                            type="text"
                             label="Username"
-                            autoComplete="username"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            inputRef={emailRef}
                         />
 
                         <TextField
@@ -63,14 +71,16 @@ const Login = () => {
                             fullWidth
                             label="Password"
                             type="password"
-                            autoComplete="current-password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            inputRef={passwordRef}
                         />
 
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            label="Confirm Password"
+                            type="password"
+                            inputRef={confirmPasswordRef}
                         />
 
                         <Button
@@ -79,21 +89,8 @@ const Login = () => {
                             variant="contained"
                             sx={{ mt: 2, mb: 2 }}
                         >
-                            Sign In
+                            Sign Up
                         </Button>
-
-                        <Grid container direction="column" alignItems="center">
-                            <Grid item xs={12}>
-                                <Link href="#" variant="body2">
-                                    Forgot password?
-                                </Link>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Link href="/signUp" variant="body2">
-                                    {"Don't have an account? Sign Up"}
-                                </Link>
-                            </Grid>
-                        </Grid>
                     </Box>
                 </Box>
             </Paper>
@@ -101,4 +98,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default SignUp;

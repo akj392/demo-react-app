@@ -7,16 +7,41 @@ import Toolbar from '@mui/material/Toolbar';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMobileOpen } from '../store/slices/navDrawerSlice';
+import { logout } from '../store/slices/authSlice';
+import { useState } from 'react';
+import { Divider, Menu, MenuItem } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const AppHeader = () => {
     const mobileOpen = useSelector((store) => store.navDrawer.mobileOpen);
     const isClosing = useSelector((store) => store.navDrawer.isClosing);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
     const handleDrawerToggle = () => {
         if (!isClosing) {
             dispatch(setMobileOpen(!mobileOpen));
         }
     };
+    const handleMenuOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleLogout = async () => {
+        handleMenuClose();
+        try {
+            dispatch(logout());
+            navigate("/login", { replace: true });
+        } catch (err) {
+            console.error("Logout failed", err);
+        }
+    };
+
     return (
         <AppBar position="fixed"
             sx={{ width: '100%', left: 0 }}>
@@ -38,10 +63,27 @@ const AppHeader = () => {
                     Corner Shop
                 </Typography>
                 <Box sx={{ flexGrow: 1 }} />
-                <AccountCircleIcon sx={{ fontSize: 45, justifyContent: 'end' }} />
-                <Typography variant="h6" fontStyle="italic" noWrap component="div">
-                    Hi, Abhishek
-                </Typography>
+                <IconButton size="large"
+                    edge="end"
+                    color="inherit"
+                    onClick={handleMenuOpen}>
+                    <AccountCircleIcon sx={{ fontSize: 45 }} />
+                </IconButton>
+
+                <Menu anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleMenuClose}
+                    anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                    transformOrigin={{ vertical: "top", horizontal: "right" }}>
+                    <Box sx={{ px: 2, py: 1 }}>
+                        <Typography variant="subtitle1">Abhishek Kumar</Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            abhishek@example.com
+                        </Typography>
+                    </Box>
+                    <Divider />
+                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                </Menu>
             </Toolbar>
         </AppBar>
     )

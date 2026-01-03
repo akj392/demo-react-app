@@ -4,30 +4,47 @@ import App from "./App";
 import {
     Dashboard,
     PageNotFound,
-    Login
+    Login,
+    SignUp
 } from "./pages";
+
+import ProtectedRoute from './ProtectedRoute';
+import PublicRoute from './PublicRoute'
 
 
 export default function getRoutes() {
-    const routes = createBrowserRouter([
+    return createBrowserRouter([
         {
-            path: '/',
-            element: <App />,
+            element: <ProtectedRoute />,
             children: [
                 {
-                    path: '/dashboard',
-                    element: <Dashboard/>
-                },
-                {
-                    path: '*',
-                    element: <PageNotFound/>
+                    path: '/',
+                    element: <App />,
+                    children: [
+                        {
+                            path: 'dashboard',
+                            element: <Dashboard />
+                        }
+                    ]
                 }
             ]
         },
         {
-            path: '/login',
-            element: <Login/>
+            element: <PublicRoute />,
+            children: [
+                {
+                    path: '/login',
+                    element: <Login />
+                },
+                {
+                    path: '/signUp',
+                    element: <SignUp />
+                }
+            ]
+        },
+        {
+            path: '*',
+            element: <PageNotFound />
         }
-    ])
-    return routes;
+    ]);
 }
