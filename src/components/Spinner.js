@@ -1,21 +1,20 @@
-import { Box, Typography } from '@mui/material'
+import { Box, CircularProgress } from "@mui/material";
 
-const Spinner = () => {
-    return (
-        <Box sx={
-            {
-                minHeight: '100%',
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-            }
-        }>
-            <Typography variant="h2" color='text.secondary'>
-                Loading ....
-            </Typography>
-        </Box>
-    )
-}
+const Spinner = ({ size = 60, fullScreen = true }) => {
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: fullScreen ? "100vh" : "auto",
+        width: "100%",
+        backgroundColor: fullScreen ? "rgba(255,255,255,0.7)" : "transparent",
+      }}
+    >
+      <CircularProgress size={size} />
+    </Box>
+  );
+};
 
-export default Spinner
+export default Spinner;

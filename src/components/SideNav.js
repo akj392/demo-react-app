@@ -78,7 +78,7 @@ const SideNav = () => {
                         '& .MuiDrawer-paper': {
                             width: drawerWidth,
                             boxSizing: 'border-box',
-                            top: '64px',
+                            top: '70px',
                             height: 'calc(100% - 64px)'
                         }
                     }

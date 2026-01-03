@@ -19,8 +19,8 @@ const authSlice = createSlice({
             state.accessToken = accessToken;
             state.isAuthenticated = true;
         },
-        finishInitializing: (state) => {
-            state.isInitializing = false;
+        finishInitializing: (state, action) => {
+            state.isInitializing = action.payload ?? false;
         }
     },
     extraReducers: (builder) => {
