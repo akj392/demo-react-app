@@ -6,7 +6,9 @@ import {
     Box,
     Typography,
     Container,
-    Paper
+    Paper,
+    Grid,
+    Link
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,7 +24,7 @@ const SignUp = () => {
     const confirmPasswordRef = useRef('');
 
     useEffect(() => {
-        if(isSignedUp) {
+        if (isSignedUp) {
             navigate('/login')
         }
     }, [isSignedUp, navigate]);
@@ -92,6 +94,14 @@ const SignUp = () => {
                             Sign Up
                         </Button>
                     </Box>
+
+                    <Grid container direction="column" alignItems="center">
+                        <Grid item xs={12}>
+                            <Link href="/login" variant="body2">
+                                Back to Login
+                            </Link>
+                        </Grid>
+                    </Grid>
                 </Box>
             </Paper>
         </Container>
